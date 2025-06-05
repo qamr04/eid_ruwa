@@ -1,0 +1,669 @@
+/* ======================================= */
+/* CSS Variabelen voor Theming - Vrolijke Eid Editie */
+/* ======================================= */
+:root {
+    --primary-color: #FF6F61; /* Levendig Koraalrood - Actiekleuren */
+    --secondary-color: #6A0572; /* Diep Paars - Complementaire kleur */
+    --text-color-light: #FFFAE6; /* Roomwit - Goed leesbaar op donker */
+    --text-color-dark: #3A0000; /* Diep Bordeaux - Voor contrast, indien nodig */
+    --accent-color: #FFD700; /* Goud - Feestelijk accent */
+
+    /* NIEUW: Kleur voor "Ruwa" en "I love you Sa3foora" */
+    --ruwa-light-pink: #FFC0CB; /* Lichtroze */
+
+    /* Achtergrond- en boxkleuren - Vrolijk Transparant */
+    --overlay-color: rgba(50, 0, 70, 0.55); /* Donkerder, paars-achtig overlay over achtergrond */
+    --box-bg-color: rgba(255, 165, 0, 0.18); /* Transparant Oranje-Goud voor contentboxen */
+    --alt-section-bg-color: rgba(255, 100, 100, 0.12); /* Zeer licht transparant rood voor afwisselende secties */
+    --countdown-box-bg: rgba(255, 165, 0, 0.3); /* Iets dekkender oranje-goud voor countdown vakken */
+    --wish-item-bg: rgba(255, 165, 0, 0.12); /* Transparant oranje-goud voor wensitems */
+
+    /* Lettertypen */
+    --font-heading: 'Great Vibes', cursive;
+    --font-body: 'Open Sans', sans-serif;
+
+    /* Schaduwen */
+    --shadow-light: 0 5px 15px rgba(0, 0, 0, 0.3);
+    --shadow-medium: 0 10px 25px rgba(0, 0, 0, 0.5);
+    --shadow-heavy: 0 15px 40px rgba(0, 0, 0, 0.6);
+    --text-shadow-light: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    --text-shadow-heavy: 2px 2px 8px rgba(0, 0, 0, 0.9);
+}
+
+/* ======================================= */
+/* Algemene Resets & Basisstijlen */
+/* ======================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 90%; /* Algemene schaal: 10% kleiner dan standaard browsergrootte */
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--text-color-light);
+    line-height: 1.6;
+    overflow-x: hidden; /* Voorkomt horizontale scrollbalken */
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ======================================= */
+/* Achtergrond Media (Video/Afbeelding) */
+/* ======================================= */
+.background-media {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2; /* Ligt achter alles */
+    overflow: hidden;
+}
+
+.background-video,
+.background-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+    opacity: 0; /* Standaard onzichtbaar, JS maakt het zichtbaar */
+    visibility: hidden;
+}
+
+.background-image {
+    opacity: 1; /* Afbeelding is standaard zichtbaar, tenzij video laadt */
+    visibility: visible;
+}
+
+.background-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--overlay-color);
+    z-index: -1; /* Tussen media en inhoud */
+}
+
+/* ======================================= */
+/* Hulpprogramma's (Flexbox, Fullscreen) */
+/* ======================================= */
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fullscreen {
+    min-height: 100vh;
+}
+
+/* ======================================= */
+/* Header en Navigatie (DE TOP BALK - Smooth & Afgerond) */
+/* ======================================= */
+.main-header {
+    position: fixed;
+    width: calc(100% - 40px);
+    max-width: 1160px;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    background-color: var(--overlay-color);
+    padding: 15px 30px;
+    border-radius: 50px;
+    box-shadow: var(--shadow-medium);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    transition: all 0.3s ease-in-out;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo {
+    font-family: var(--font-heading);
+    font-size: 2.2em;
+    color: var(--accent-color);
+    text-shadow: var(--text-shadow-light);
+    line-height: 1;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    margin-right: -10px;
+}
+
+.nav-links li {
+    margin-left: 30px;
+}
+
+.nav-links a {
+    color: var(--text-color-light);
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 1.1em;
+    padding: 8px 10px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.nav-links a:hover,
+.nav-links a:focus {
+    color: var(--primary-color);
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-1px);
+}
+
+/* ======================================= */
+/* Hero Sectie (Home) */
+/* ======================================= */
+.hero-section {
+    padding-top: 150px;
+    text-align: center;
+    min-height: calc(100vh - 150px);
+    flex-grow: 1;
+}
+
+.hero-content {
+    background-color: var(--box-bg-color);
+    padding: 60px 80px;
+    border-radius: 20px;
+    box-shadow: var(--shadow-heavy);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hero-content h1 {
+    font-family: var(--font-heading);
+    font-size: 8.5em;
+    color: var(--accent-color);
+    margin-bottom: 10px;
+    text-shadow: var(--text-shadow-heavy);
+    line-height: 1;
+    white-space: nowrap;
+}
+
+/* "I love you Sa3foora" text (now static) */
+.love-you-text {
+    margin-top: 35px;
+    font-family: var(--font-heading);
+    font-size: 5.5em;
+    color: var(--ruwa-light-pink);
+    text-shadow: 2px 2px 7px rgba(0, 0, 0, 0.8);
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
+.love-you-text.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+.hero-content .sub-text {
+    font-size: 3em;
+    color: var(--text-color-light);
+    margin-bottom: 25px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.hero-content .highlight-name {
+    font-family: var(--font-heading);
+    font-size: 2em;
+    color: var(--ruwa-light-pink);
+    text-shadow: var(--text-shadow-light);
+}
+
+.separator {
+    width: 100px;
+    height: 4px;
+    background-color: var(--primary-color);
+    margin: 30px auto 40px auto;
+    border-radius: 5px;
+}
+
+.greeting-message {
+    font-size: 1.9em;
+    max-width: 700px;
+    margin: 0 auto 40px auto;
+    font-weight: 300;
+    color: var(--text-color-light);
+}
+
+.cta-button {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+    padding: 18px 35px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 1.3em;
+    font-weight: 700;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.cta-button:hover,
+.cta-button:focus {
+    background-color: #E65A50;
+    transform: translateY(-4px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
+}
+
+/* ======================================= */
+/* Algemene Sectie Stijlen */
+/* ======================================= */
+main {
+    flex-grow: 1;
+}
+
+.section-container {
+    padding: 100px 20px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    min-height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.section-container:nth-of-type(even) {
+    background-color: var(--alt-section-bg-color);
+}
+
+.section-content {
+    background-color: var(--box-bg-color);
+    padding: 50px 60px;
+    border-radius: 15px;
+    box-shadow: var(--shadow-medium);
+    max-width: 950px;
+    width: 100%;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.section-content h2 {
+    font-family: var(--font-heading);
+    font-size: 4.2em;
+    margin-bottom: 35px;
+    color: var(--accent-color);
+    text-shadow: var(--text-shadow-light);
+}
+
+/* ======================================= */
+/* Countdown Timer Stijlen (verborgen door JS) */
+/* ======================================= */
+.countdown-timer {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 50px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.time-box {
+    background-color: var(--countdown-box-bg);
+    padding: 22.5px 31.5px; /* Origineel 25px 35px -> 10% kleiner */
+    border-radius: 10.8px; /* Origineel 12px -> 10% kleiner */
+    box-shadow: var(--shadow-light);
+    font-size: 2.25em; /* Origineel 2.5em -> 10% kleiner */
+    font-weight: 700;
+    color: var(--accent-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 117px; /* Origineel 130px -> 10% kleiner */
+    text-shadow: var(--text-shadow-light);
+}
+
+.time-box small {
+    font-size: 0.36em; /* Origineel 0.4em -> 10% kleiner */
+    font-weight: 400;
+    margin-top: 10.8px; /* Origineel 12px -> 10% kleiner */
+    color: var(--text-color-light);
+    opacity: 0.8;
+}
+
+.message-after-countdown {
+    font-size: 1.8em; /* Origineel 2em -> 10% kleiner */
+    color: var(--text-color-light);
+    font-weight: 600;
+    margin-top: 22.5px; /* Origineel 25px -> 10% kleiner */
+    min-height: 27px; /* Origineel 30px -> 10% kleiner */
+}
+
+/* ======================================= */
+/* Bericht Sectie Specifiek */
+/* ======================================= */
+.long-message {
+    font-size: 1.44em; /* Origineel 1.6em -> 10% kleiner */
+    margin-bottom: 31.5px; /* Origineel 35px -> 10% kleiner */
+    line-height: 1.8;
+    max-width: 720px; /* Origineel 800px -> 10% kleiner */
+    margin-left: auto;
+    margin-right: auto;
+    color: var(--text-color-light);
+}
+
+.signature {
+    font-family: var(--font-heading);
+    font-size: 2.52em; /* Origineel 2.8em -> 10% kleiner */
+    margin-top: 45px; /* Origineel 50px -> 10% kleiner */
+    color: var(--primary-color);
+}
+
+.signature-name {
+    font-size: 1.62em; /* Origineel 1.8em -> 10% kleiner */
+    font-weight: 600;
+    margin-top: 13.5px; /* Origineel 15px -> 10% kleiner */
+    color: var(--accent-color);
+}
+
+/* ======================================= */
+/* Wensen Sectie */
+/* ======================================= */
+.wish-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 18px; /* Origineel 20px -> 10% kleiner */
+    margin-top: 36px; /* Origineel 40px -> 10% kleiner */
+    max-width: 630px; /* Origineel 700px -> 10% kleiner */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#wishText {
+    width: 100%;
+    padding: 16.2px; /* Origineel 18px -> 10% kleiner */
+    border-radius: 9px; /* Origineel 10px -> 10% kleiner */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: rgba(0, 0, 0, 0.4);
+    color: var(--text-color-light);
+    font-family: var(--font-body);
+    font-size: 1.08em; /* Origineel 1.2em -> 10% kleiner */
+    resize: vertical;
+}
+
+#wishText::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+#submitWish {
+    align-self: flex-end;
+}
+
+.wish-output {
+    margin-top: 45px; /* Origineel 50px -> 10% kleiner */
+    border-top: 1px dashed rgba(255, 255, 255, 0.2);
+    padding-top: 22.5px; /* Origineel 25px -> 10% kleiner */
+    text-align: left;
+    max-height: 315px; /* Origineel 350px -> 10% kleiner */
+    overflow-y: auto;
+    padding-right: 13.5px; /* Origineel 15px -> 10% kleiner */
+}
+
+.wish-item {
+    background-color: var(--wish-item-bg);
+    padding: 16.2px; /* Origineel 18px -> 10% kleiner */
+    border-radius: 9px; /* Origineel 10px -> 10% kleiner */
+    margin-bottom: 16.2px; /* Origineel 18px -> 10% kleiner */
+    box-shadow: 0 2.7px 9px rgba(0, 0, 0, 0.3);
+    border-left: 4.5px solid var(--primary-color); /* Origineel 5px -> 10% kleiner */
+    font-size: 1.17em; /* Origineel 1.3em -> 10% kleiner */
+    word-wrap: break-word;
+    color: var(--text-color-light);
+}
+
+.note {
+    font-size: 0.99em; /* Origineel 1.1em -> 10% kleiner */
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 22.5px; /* Origineel 25px -> 10% kleiner */
+}
+
+/* ======================================= */
+/* Footer */
+/* ======================================= */
+.main-footer {
+    background-color: var(--overlay-color);
+    color: var(--text-color-light);
+    text-align: center;
+    padding: 36px 18px; /* Origineel 40px 20px -> 10% kleiner */
+    font-size: 0.945em; /* Origineel 1.05em -> 10% kleiner */
+    margin-top: auto;
+    backdrop-filter: blur(7.2px); /* Origineel 8px -> 10% kleiner */
+    -webkit-backdrop-filter: blur(7.2px);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.main-footer p {
+    margin-bottom: 18px; /* Origineel 20px -> 10% kleiner */
+}
+
+.social-links a {
+    color: var(--text-color-light);
+    font-size: 1.8em; /* Origineel 2em -> 10% kleiner */
+    margin: 0 10.8px; /* Origineel 12px -> 10% kleiner */
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-links a:hover {
+    color: var(--primary-color);
+    transform: translateY(-1.8px); /* Origineel -2px -> 10% kleiner */
+}
+
+/* ======================================= */
+/* Animation Classes (for JS) */
+/* ======================================= */
+.animate-fade-in {
+    opacity: 0;
+    transform: translateY(-18px); /* Origineel -20px -> 10% kleiner */
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.animate-fade-in.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.animate-slide-up {
+    opacity: 0;
+    transform: translateY(45px); /* Origineel 50px -> 10% kleiner */
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.animate-slide-up.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.animate-slide-up-on-scroll {
+    opacity: 0;
+    transform: translateY(72px); /* Origineel 80px -> 10% kleiner */
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.animate-slide-up-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ======================================= */
+/* Media Queries for Responsiveness (Aangepast met 10% schaal) */
+/* ======================================= */
+@media (max-width: 1000px) {
+    .main-header {
+        max-width: calc(100% - 54px); /* Origineel 60px -> 10% kleiner */
+        padding: 10.8px 22.5px; /* Origineel 12px 25px -> 10% kleiner */
+    }
+    .hero-content h1 {
+        font-size: 5.85em; /* Origineel 6.5em -> 10% kleiner */
+    }
+    .love-you-text {
+        font-size: 4.05em; /* Origineel 4.5em -> 10% kleiner */
+    }
+}
+
+@media (max-width: 768px) {
+    .main-header {
+        width: calc(100% - 27px); /* Origineel 30px -> 10% kleiner */
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 27px; /* Origineel 30px -> 10% kleiner */
+        padding: 10.8px 18px; /* Origineel 12px 20px -> 10% kleiner */
+    }
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+    }
+    .nav-links {
+        margin-top: 9px; /* Origineel 10px -> 10% kleiner */
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-right: 0;
+    }
+    .nav-links li {
+        margin: 4.5px 9px; /* Origineel 5px 10px -> 10% kleiner */
+    }
+    .hero-content {
+        padding: 36px 45px; /* Origineel 40px 50px -> 10% kleiner */
+    }
+    .hero-content h1 {
+        font-size: 4.05em; /* Origineel 4.5em -> 10% kleiner */
+    }
+    .love-you-text {
+        font-size: 3.15em; /* Origineel 3.5em -> 10% kleiner */
+    }
+    .hero-content .sub-text {
+        font-size: 1.98em; /* Origineel 2.2em -> 10% kleiner */
+    }
+    .hero-content .highlight-name {
+        font-size: 1.44em; /* Origineel 1.6em -> 10% kleiner */
+    }
+    .greeting-message {
+        font-size: 1.35em; /* Origineel 1.5em -> 10% kleiner */
+    }
+    .section-content {
+        padding: 36px 36px; /* Origineel 40px -> 10% kleiner */
+    }
+    .section-content h2 {
+        font-size: 3.15em; /* Origineel 3.5em -> 10% kleiner */
+    }
+    .countdown-timer {
+        gap: 22.5px; /* Origineel 25px -> 10% kleiner */
+    }
+    .time-box {
+        padding: 18px 27px; /* Origineel 20px 30px -> 10% kleiner */
+        font-size: 2.25em; /* Origineel 2.5em -> 10% kleiner */
+        min-width: 99px; /* Origineel 110px -> 10% kleiner */
+    }
+}
+
+@media (max-width: 480px) {
+    .main-header {
+        padding: 9px 13.5px; /* 10% kleiner */
+        top: 9px; /* 10% kleiner */
+    }
+    .logo {
+        font-size: 1.8em; /* 10% kleiner */
+    }
+    .nav-links {
+        font-size: 0.81em; /* 10% kleiner */
+    }
+    .nav-links li {
+        margin: 2.7px 7.2px; /* 10% kleiner */
+    }
+    .hero-content {
+        padding: 27px 22.5px; /* 10% kleiner */
+    }
+    .hero-content h1 {
+        font-size: 2.88em; /* 10% kleiner */
+    }
+    .love-you-text {
+        font-size: 2.25em; /* 10% kleiner */
+    }
+    .hero-content .sub-text {
+        font-size: 1.62em; /* 10% kleiner */
+    }
+    .hero-content .highlight-name {
+        font-size: 1.26em; /* 10% kleiner */
+    }
+    .greeting-message {
+        font-size: 1.08em; /* 10% kleiner */
+    }
+    .cta-button {
+        padding: 12.6px 25.2px; /* 10% kleiner */
+        font-size: 0.99em; /* 10% kleiner */
+    }
+    .section-container {
+        padding: 54px 13.5px; /* 10% kleiner */
+    }
+    .section-content {
+        padding: 27px 22.5px; /* 10% kleiner */
+    }
+    .section-content h2 {
+        font-size: 2.52em; /* 10% kleiner */
+    }
+    .countdown-timer {
+        gap: 13.5px; /* 10% kleiner */
+    }
+    .time-box {
+        padding: 13.5px 18px; /* 10% kleiner */
+        font-size: 1.8em; /* 10% kleiner */
+        min-width: 81px; /* 10% kleiner */
+    }
+    .long-message {
+        font-size: 1.08em; /* 10% kleiner */
+    }
+    .signature {
+        font-size: 1.8em; /* 10% kleiner */
+    }
+    .signature-name {
+        font-size: 1.35em; /* 10% kleiner */
+    }
+    .wish-input-group {
+        gap: 9px; /* 10% kleiner */
+    }
+    #wishText {
+        padding: 10.8px; /* 10% kleiner */
+        font-size: 0.9em; /* 10% kleiner */
+    }
+    .wish-item {
+        padding: 13.5px; /* 10% kleiner */
+        font-size: 0.99em; /* 10% kleiner */
+    }
+    .note {
+        font-size: 0.81em; /* 10% kleiner */
+    }
+    .main-footer {
+        padding: 27px 13.5px; /* 10% kleiner */
+        font-size: 0.855em; /* 10% kleiner */
+    }
+    .social-links a {
+        font-size: 1.44em; /* 10% kleiner */
+    }
+}
